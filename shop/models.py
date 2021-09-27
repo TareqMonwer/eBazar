@@ -1,5 +1,6 @@
 from django.utils.translation import gettext as _
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -33,6 +34,9 @@ class Product(models.Model):
     
     def __str__(self) -> str:
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('shop:detail', args=(self.id, self.slug))
     
     def get_price(self):
         if self.sale_price and self.sale_price < self.price:

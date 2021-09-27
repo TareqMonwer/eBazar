@@ -1,0 +1,15 @@
+{% extends 'base/products.html' %}
+{% block title %} {{ block.super }} {{ product.name }} {% endblock %}
+{% block shop_main %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <img src="{{ product.image.url }}" class="img-responsive "alt="{{ product.name }}">
+        </div>
+        <div class="col-6">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

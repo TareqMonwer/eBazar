@@ -1,0 +1,53 @@
+{% extends 'base/products.html' %}
+{% block title %} {{ block.super }} Products {% endblock %}
+{% block shop_main %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{% url 'shop:products' %}">All</a>
+                </li>
+                {% for category in categories %}
+                    <li class="list-group-item">
+                        <a href="{% url 'shop:category_products' category_slug=category.slug %}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-9">
+            <div class="row m-0">
+                {% if category %}
+                    <h4 class="mb-3">Products from {{ category.name }} </h4>
+                {% endif %}
+                {% for product in products %} 
+                <div class="col-sm-6 col-md-3">
+                    <div class="card">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{{ product.image.url }}" 
+                                class="card-img-top" alt="{{ product.name }}"
+                                height="200"
+                            />
+                        </a>
+                        <div class="card-body">
+                            <a href="{{ product.get_absolute_url }}">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                            </a>
+                            <p class="card-text">
+                                {{ product.description }}
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="#" class="btn btn-sm btn-primary">cart</a>
+                            <a href="#" class="text-dark">${{product.get_price }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock shop_main %}
