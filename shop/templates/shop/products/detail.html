@@ -1,14 +1,57 @@
 {% extends 'base/products.html' %}
 {% block title %} {{ block.super }} {{ product.name }} {% endblock %}
 {% block shop_main %}
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-6">
-            <img src="{{ product.image.url }}" class="img-responsive "alt="{{ product.name }}">
+        <div class="col-5">
+            <img src="{{ product.image.url }}" 
+            class="img-responsive" 
+            alt="{{ product.name }}"
+            width="100%">
         </div>
-        <div class="col-6">
-            <h1>{{ product.name }}</h1>
-            <p>{{ product.description }}</p>
+        <div class="col-5">
+            <h1 class="mb-1">{{ product.name }}</h1>
+            <div class="my-3">
+                <h4>
+                    <strong>Price: </strong>
+                    {{ product.get_price }}
+                </h4>
+                {% if product.price > product.sale_price%}
+                    <small class="text-danger text-decoration-line-through">
+                        <strong>Old Price: </strong>
+                        {{ product.price }}
+                    </small>
+                {% endif %}
+            </div>
+            <hr>
+            <p class="mb-3">{{ product.description }}</p>
+            <p class="fst-italic">
+                {% for category in product.categories.all %}
+                    <a href="">
+                        {{ category.name }}
+                    </a>
+                    {% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="col-2">
+            <form action="" method="post" style="width: 100%;">
+                {% csrf_token %} 
+                <div class="form-group mb-1">
+                    <label for="exampleFormControlSelect1">Select quantity</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div class="d-grid">
+                    <input type="submit" value="Buy Now" 
+                    class="btn btn-sm btn-secondary">
+                </div>
+            </form>
         </div>
     </div>
 </div>
