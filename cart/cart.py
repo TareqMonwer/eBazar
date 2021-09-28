@@ -4,7 +4,7 @@ from shop.models import Product
 
 
 class Cart:
-    def __def__(self, request):
+    def __init__(self, request):
         self.session = request.session
         cart = request.session.get(settings.CART_SESSION_KEY)
         if not cart:
@@ -21,7 +21,6 @@ class Cart:
             cart[str(product.id)]['product'] = product
 
         for item in cart.values():
-            print(item, ' cart item from iter...')
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
@@ -29,15 +28,18 @@ class Cart:
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
 
-    def add(self, product, quantity, override_quantity=False):
+    def add(self, product, quantity=0, override_quantity=False):
         product_id = str(product.id)
+        print('quantity,............', quantity)
         if product_id not in self.cart:
             self.cart[product_id] = {
-                'quantity': quantity, 'price': product.get_price()}
+                'quantity': quantity, 
+                'price': str(product.get_price())
+            }
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
-            self.cart[product_id]['quantity'] += quantity
+            self.cart[product_id]['quantity'] += 1
         self.save()
 
     def save(self):

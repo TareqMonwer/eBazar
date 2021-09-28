@@ -1,4 +1,5 @@
 {% extends 'base/products.html' %}
+{% load crispy_forms_tags %}
 {% block title %} {{ block.super }} Products {% endblock %}
 {% block shop_main %}
 <div class="container mt-5">
@@ -40,7 +41,11 @@
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-primary">cart</a>
+                            <form action="{% url 'cart:cart_add' product_id=product.id %}" method="post">
+                                {% csrf_token %}
+                                {{ cart_add_product_form|crispy }}
+                                <button type="submit" class="btn btn-sm btn-primary">cart</button> 
+                            </form>
                             <a href="#" class="text-dark">${{product.get_price }}</a>
                         </div>
                     </div>
