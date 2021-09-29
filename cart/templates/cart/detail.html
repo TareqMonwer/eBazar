@@ -59,19 +59,18 @@
         <li class="list-group-item active">
           <b>Recently visited</b>
         </li>
-        <li class="list-group-item">
-          <a href="">A Random Book</a>
-        </li>
-        <li class="list-group-item">
-          <a href="">Python book</a>
-        </li>
-        <li class="list-group-item">
-          <a href="">A JavaScript Book</a>
-        </li>
+        {% for recent_item in recently_visited_products %}
+          <a href="{{ recent_item.get_absolute_url }}">
+            <li class="list-group-item">
+              <img src="{{ recent_item.image.url }}" alt="{{ recent_item.name }}" height="60" width="50">
+              <a href="{{ recent_item.get_absolute_url }}">{{ recent_item.name }}</a>
+            </li>
+          </a>
+        {% endfor %}
       </ul>
       <ul class="list-group mt-2">
         <li class="list-group-item active">
-          <b>Most Relavants</b>
+          <b>Most Relavants (STATIC)</b>
         </li>
         <li class="list-group-item">
           <a href="">Clean Code</a>

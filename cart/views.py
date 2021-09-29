@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from shop.models import Product
+from shop.products_tracking import RecentlyVisitedProducts
 from cart.cart import Cart
 from cart.forms import CartAddProductForm
 
@@ -27,4 +28,7 @@ def cart_remove(request, product_id):
 
 def cart_detail(request):
     cart = Cart(request)
-    return render(request, 'cart/detail.html', {'cart': cart})
+    recently_visited_products = RecentlyVisitedProducts(request)
+    context = {'cart': cart,
+               'recently_visited_products': recently_visited_products}
+    return render(request, 'cart/detail.html', context)

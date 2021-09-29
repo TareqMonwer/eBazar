@@ -2,49 +2,74 @@
 {% load crispy_forms_tags %}
 {% block title %} {{ block.super }} {{ product.name }} {% endblock %}
 {% block shop_main %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-5">
-            <img src="{{ product.image.url }}" 
-            class="img-responsive" 
-            alt="{{ product.name }}"
-            width="100%">
-        </div>
-        <div class="col-5">
-            <h1 class="mb-1">{{ product.name }}</h1>
-            <div class="my-3">
-                <h4>
-                    <strong>Price: </strong>
-                    {{ product.get_price }}
-                </h4>
-                {% if product.price > product.sale_price%}
-                    <small class="text-danger text-decoration-line-through">
-                        <strong>Old Price: </strong>
-                        {{ product.price }}
-                    </small>
-                {% endif %}
-            </div>
-            <hr>
-            <p class="mb-3">{{ product.description }}</p>
-            <p class="fst-italic">
-                {% for category in product.categories.all %}
-                    <a href="">
-                        {{ category.name }}
-                    </a>
-                    {% if not forloop.last %},{% endif %}
-                {% endfor %}
-            </p>
-        </div>
-        <div class="col-2">
-            <form action="{% url 'cart:cart_add' product_id=product.id %}" method="post" style="width: 100%;">
-                {% csrf_token %} 
-                {{ cart_add_product_form|crispy }}
-                <div class="d-grid">
-                    <input type="submit" value="Buy Now" 
-                    class="btn btn-sm btn-secondary">
-                </div>
-            </form>
-        </div>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-5">
+      <img src="{{ product.image.url }}" class="img-responsive" alt="{{ product.name }}" width="100%">
     </div>
+    <div class="col-5">
+      <h1 class="mb-1">{{ product.name }}</h1>
+      <div class="my-3">
+        <h4>
+          <strong>Price: </strong>
+          {{ product.get_price }}
+        </h4>
+        {% if product.price > product.sale_price%}
+        <small class="text-danger text-decoration-line-through">
+          <strong>Old Price: </strong>
+          {{ product.price }}
+        </small>
+        {% endif %}
+      </div>
+      <hr>
+      <p class="mb-3">{{ product.description }}</p>
+      <p class="fst-italic">
+        {% for category in product.categories.all %}
+        <a href="">
+          {{ category.name }}
+        </a>
+        {% if not forloop.last %},{% endif %}
+        {% endfor %}
+      </p>
+    </div>
+    <div class="col-2">
+      <form action="{% url 'cart:cart_add' product_id=product.id %}" method="post" style="width: 100%;">
+        {% csrf_token %}
+        {{ cart_add_product_form|crispy }}
+        <div class="d-grid">
+          <input type="submit" value="Buy Now" class="btn btn-sm btn-secondary">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h3>Recently Visited Products</h3>
+    {% for product in recently_visted_products   %}
+    <div class="col-sm-6 col-md-3 col-xl-2">
+      <div class="card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" height="200" />
+        </a>
+        <div class="card-body">
+          <a href="{{ product.get_absolute_url }}">
+            <h5 class="card-title">{{ product.name }}</h5>
+          </a>
+          <p class="card-text">
+            {{ product.description }}
+          </p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <form action="{% url 'cart:cart_add' product_id=product.id %}" method="post">
+            {% csrf_token %}
+            {{ cart_add_product_form|crispy }}
+            <button type="submit" class="btn btn-sm btn-primary">cart</button>
+          </form>
+          <a href="#" class="text-dark">${{product.get_price }}</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

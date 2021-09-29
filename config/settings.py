@@ -139,3 +139,4 @@ MEDEIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CART_SESSION_KEY = 'cart'
+RECENT_PRODUCTS_SESSION_KEY = 'recently_visited_products'
