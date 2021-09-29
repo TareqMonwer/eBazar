@@ -1,0 +1,56 @@
+{% extends 'base/products.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{ block.super }} Place Order
+{% endblock title %}
+
+
+
+{% block shop_main %}
+<div class="container my-5">
+  <div class="row justify-content-between">
+    <div class="col-sm-12 col-md-8">
+      <h3 class="mb-3">Place Order</h3>
+      <form action="." method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Proceed to Payment" class="btn btn-success float-end">
+      </form>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cartitem in cart %}
+          {% with cartitem.product as product %}
+          <tr>
+            <td>
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" height="60">
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ cartitem.quantity }}</td>
+            <td>{{ cartitem.price }}</td>
+            <td>{{ cartitem.total_price }}</td>
+          </tr>
+          {% endwith %}
+          {% endfor %}
+          <tr>
+            <td colspan="5" class="text-end">
+              <h4>Total Payable: ${{cart.get_total_price}}</h4>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock shop_main %}

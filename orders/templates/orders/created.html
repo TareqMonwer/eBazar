@@ -1,0 +1,27 @@
+{% extends 'base/products.html' %}
+
+{% block title %}
+    {{ block.super }} Order Recieved
+{% endblock title %}
+
+
+{% block shop_main %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Order Recieved!</h4>
+                    <p>
+                        We have recieved your order and we'll process it shortly. Please check your email for further information.
+                    </p>
+                    <hr>
+                    <a href="{% url 'shop:products' %}" class="btn btn-success">
+                        Back to shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock shop_main %}
+
+    

@@ -60,7 +60,10 @@
             <td colspan="4">
               <div class="d-flex justify-content-end align-items-center">
                 <h4 class="m-0"><b>${{ cart.get_total_price }}</b></h4>
-                <a href="" class="d-inline-block ms-3 btn btn-secondary">Checkout Now</a>
+                <a href="{% url 'orders:create_order' %}" 
+                  class="d-inline-block ms-3 btn btn-secondary">
+                  Checkout Now
+                </a>
               </div>
             </td>
           </tr>
