@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Local Apps
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
 
     # 3rd party
     'crispy_forms',
